@@ -12,9 +12,8 @@ buffer = 1000
 def move(lspd,rspd,wait):
     bot(18).servo_speed(lspd)
     bot(19).servo_speed(rspd)
-    sleep(wait)
-    bot(18).servo_speed(0)
-    bot(19).servo_speed(0)
+    #sleep(wait)
+    #stop()
 
 
 def stop():
@@ -23,33 +22,76 @@ def stop():
 
 
 
+
+
+
+
+
+
+
+
+
+# main loop
 while True:
+    # recive code
+
+
+    # recive A
+    # go left
+    if radio.receive_bytes() == b'00':
+        display.show("L")
+        move(-74.25,-75,3000)
+
+
+
+
     
-    if button_a.is_pressed():
-        audio.play(audio.SoundEffect())
-        for i in range(buffer):
-            radio.send('A')
-            sleep(1)
-        
-    elif button_b.is_pressed():   
-        audio.play(audio.SoundEffect())
-        for i in range(buffer):
-            radio.send('B')
-            sleep(1)
 
-    if radio.receive() == "A":
-        display.show("A")
-        move(74.25,-75,3000)
-
-
-    if radio.receive() == "B":
+    # recive C
+    # go back
+    elif radio.receive_bytes() == b'01':
         display.show("B")
         move(-74.25,75,3000)
 
 
 
+
+
+
+    
+
+
+    # recive B
+    # go forward
+    elif radio.receive_bytes() == b'10':
+        display.show("F")
+        move(74.25,-75,3000)
+
     
 
 
     
+
+    # recive D
+    # go right
+    elif radio.receive_bytes() == b'11':
+        display.show("R")
+        move(74.25,75,3000)
+
+
+
+    
+
+
+    
+    # stop
+    else:
+        bot(18).servo_speed(None)
+        bot(19).servo_speed(None)
+        display.clear()
+
+    if button_a.is_pressed() and button_b.is_pressed():
+        stop()
+        display.clear()
+
 
