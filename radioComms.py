@@ -3,8 +3,36 @@ from cyberbot import *
 from microbit import *
 import radio
 
-leftSpeed = -74.25
-rightSpeed = 75
+leftSpeed = 67
+rightSpeed = -75
+
+# prep-programed code
+
+def prepro1():
+    # nothing
+    print("null")
+
+
+
+def prepro2():
+    # nothing
+    print("null")
+
+def stop():
+    bot(18).servo_speed(0)
+    bot(19).servo_speed(0)
+
+
+
+def moveMotor(lspd,Rspd,wait):
+    bot(18).servo_speed(lspd)
+    bot(19).servo_speed(Rspd)
+    sleep(wait)
+    stop()
+    
+    
+
+
 
 
 # Receive Code
@@ -17,28 +45,27 @@ def receive():
     def move(a):
         if a == "L":
             display.show("L")
-            bot(18).servo_speed(-leftSpeed)
-            bot(19).servo_speed(leftSpeed)
+            moveMotor(leftSpeed,rightSpeed,0)
+
             
         elif a == "F":
             display.show("F")
-            bot(18).servo_speed(leftSpeed)
-            bot(19).servo_speed(leftSpeed)
+            moveMotor(leftSpeed,-rightSpeed,0)
+
 
         elif a == "B":
             display.show("B")
-            bot(18).servo_speed(-leftSpeed)
-            bot(19).servo_speed(-leftSpeed)
+            moveMotor(-leftSpeed,rightSpeed,0)
+
 
         elif a == "R":
             display.show("R")
-            bot(18).servo_speed(leftSpeed)
-            bot(19).servo_speed(-leftSpeed)
+            moveMotor(leftSpeed,-rightSpeed,0)
+
 
         elif a == "S":
             display.clear()
-            bot(18).servo_speed(None)
-            bot(19).servo_speed(None)
+            stop()
 
     # Scan for radio signals and move accordingly
 
@@ -60,6 +87,10 @@ def receive():
 
     else:
         move("S")
+
+    
+
+
 
 
 # Transmitting Code
