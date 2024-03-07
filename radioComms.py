@@ -70,18 +70,19 @@ def receive():
     # Scan for radio signals and move accordingly
 
     #↓ Transmitted as 1 bit, doesn't take long ↓
-    if radio.receive_bytes() == b'00':
+    receive = radio.receive()
+    if receive == "L":
         move("L")
 
-    elif radio.receive_bytes() == b'01':
+    elif receive == "F":
         move("F")
     #↑ Transmitted as 1 bit, doesn't take long ↑
 
     #↓ Transmitted as 2 bits, takes long ↓
-    elif radio.receive_bytes() == b'10':
+    elif receive == "B":
         move("B")
 
-    elif radio.receive_bytes() == b'11':
+    elif receive == "R":
         move("R")
     #↑ Transmitted as 2 bits, takes long ↑
 
