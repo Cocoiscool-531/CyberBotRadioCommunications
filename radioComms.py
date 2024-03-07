@@ -105,25 +105,21 @@ def transmit():
     # Read Buttons Pressed Value
     if  bot(0).read_digital() == 1:
         leftTurn = True
-        audio.play(audio.SoundEffect())
     else:
         leftTurn = False
 
     if  bot(2).read_digital() == 1:
         forward = True
-        audio.play(audio.SoundEffect())
     else:
         forward = False
 
     if  bot(13).read_digital() == 1:
         backward = True
-        audio.play(audio.SoundEffect())
     else:
         backward = False
 
     if  bot(15).read_digital() == 1:
         rightTurn = True
-        audio.play(audio.SoundEffect())
     else:
         rightTurn = False
 
@@ -131,19 +127,19 @@ def transmit():
     
     if leftTurn == True:
         display.show("L")
-        radio.send_bytes(b'00')
+        radio.send("L")
 
     elif forward == True:
         display.show("F")
-        radio.send_bytes(b'01')
+        radio.send("F")
 
     elif backward == True:
         display.show("B")
-        radio.send_bytes(b'10')
+        radio.send("B")
 
     elif rightTurn == True:
         display.show("R")
-        radio.send_bytes(b'11')
+        radio.send("R")
 
     else:
         display.clear()
@@ -152,8 +148,10 @@ def run(s):
     display.on()
     speaker.on()
     radio.on()
-    radio.config(data_rate=radio.RATE_2MBIT)
+    radio.config(power=5, data_rate=radio.RATE_2MBIT, channel=42)
 
+    bot(22).tone(500, 1000)
+    
     if s == "B":
         while True:
             receive()
