@@ -1,9 +1,4 @@
-# CyberBotRadioCommunications
+# Micro Bit Remote Control Robot
 
-News: found out you can code the microbit in C/C++
+# Building The Transmitter Circuit
 
-[Documentation](https://lancaster-university.github.io/microbit-docs/online-toolchains/)
-
-[Online IDE](http://developer.mbed.org/)
-
-Seems like it supports a lightweight version of threading
