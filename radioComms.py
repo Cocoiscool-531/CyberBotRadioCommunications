@@ -105,21 +105,25 @@ def transmit():
     # Read Buttons Pressed Value
     if  bot(0).read_digital() == 1:
         leftTurn = True
+        audio.play(audio.SoundEffect())
     else:
         leftTurn = False
 
     if  bot(2).read_digital() == 1:
         forward = True
+        audio.play(audio.SoundEffect())
     else:
         forward = False
 
     if  bot(13).read_digital() == 1:
         backward = True
+        audio.play(audio.SoundEffect())
     else:
         backward = False
 
     if  bot(15).read_digital() == 1:
         rightTurn = True
+        audio.play(audio.SoundEffect())
     else:
         rightTurn = False
 
@@ -143,7 +147,6 @@ def transmit():
 
     else:
         display.clear()
-
 # Main Run Loop, Pass in "B" for both, "T" for transmit, and "R" for reciever
 def run(s):
     display.on()
