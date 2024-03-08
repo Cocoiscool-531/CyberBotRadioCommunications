@@ -7,9 +7,8 @@ import radio
 
 # turn on sound
 music.pitch(185,1000)
-
-
-
+bot(22).tone(400, 100)
+bot(22).tone(800, 100)
 
 # stop motors
 def stop():
@@ -36,34 +35,37 @@ def move(lspd,rspd,wait):
 
 # transmit values based on input
 def transmit():
-    forward = 2
-    back = 13
-    left = 0
-    right = 15
+    while True:
+        forward = 2
+        back = 13
+        left = 0
+        right = 15
+        
+        if bot(forward).read_digital() == 1:
+            for i in range(5):
+                radio.send("F")
+                display.show("F")
+            
+        elif bot(back).read_digital() == 1:
+            for i in range(5):
+                radio.send("B")
+                display.show("B")
+            
+        elif bot(left).read_digital() == 1:
+            for i in range(5):
+                radio.send("L")
+                display.show("L")
+            
+        elif bot(right).read_digital() == 1:
+            for i in range(5):
+                radio.send("R")
+                display.show("R")
     
-    if bot(forward) == 1:
-        display.show('F')
-        for i in range(5):
-
-            radio.send("F")
-        
-    if bot(back) == 1:
-        display.show('B')
-        for i in range(5):
-            radio.send("B")
-        
-    if bot(left) == 1:
-        display.show('C')
-        for i in range(5):
-            radio.send("L")
-        
-    if bot(right) == 1:
-        display.show('D')
-        for i in range(5):
-            radio.send("R")
-
-    # to stop over flooding
-    sleep(50)
+        else:
+            display.clear()
+    
+        # to stop over flooding
+        sleep(100)
             
 
 
