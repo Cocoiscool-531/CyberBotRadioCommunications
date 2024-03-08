@@ -1,167 +1,145 @@
-# microbit-module:Radio Communications Made By Cohen & Akshay@0.0.5
-from cyberbot import * 
+# microbit-module:Radio Communications Made By Cohen & Akshay@0.5
+from cyberbot import *
 from microbit import *
+import music
 import radio
 
-leftSpeed = 67
-rightSpeed = -75
 
-# prep-programed code
-
-def prepro1():
-    # nothing
-    print("null")
+# turn on sound
+music.pitch(185,1000)
 
 
 
-def prepro2():
-    # nothing
-    print("null")
 
+# stop motors
 def stop():
-    bot(18).servo_speed(0)
-    bot(19).servo_speed(0)
+    bot(18).servo_speed(None)
+    bot(19).servo_speed(None)
 
 
 
-def moveMotor(lspd,Rspd,wait):
+
+
+# move motors accordingly, if no wait keep moving
+def move(lspd,rspd,wait):
     bot(18).servo_speed(lspd)
-    bot(19).servo_speed(Rspd)
-    sleep(wait)
-    stop()
-    
-    
-
-
-
-
-# Receive Code
-
-
-def receive():
-    
-    # Movement Code
-    
-    def move(a):
-        if a == "L":
-            display.show("L")
-            moveMotor(leftSpeed,rightSpeed,0)
-
-            
-        elif a == "F":
-            display.show("F")
-            moveMotor(leftSpeed,-rightSpeed,0)
-
-
-        elif a == "B":
-            display.show("B")
-            moveMotor(-leftSpeed,rightSpeed,0)
-
-
-        elif a == "R":
-            display.show("R")
-            moveMotor(leftSpeed,-rightSpeed,0)
-
-
-        elif a == "S":
-            display.clear()
+    bot(19).servo_speed(rspd)
+    if wait != 0:
+            sleep(wait)
             stop()
 
-    # Scan for radio signals and move accordingly
-
-    #↓ Transmitted as 1 bit, doesn't take long ↓
-    receive = radio.receive()
-    if receive == "L":
-        move("L")
-
-    elif receive == "F":
-        move("F")
-    #↑ Transmitted as 1 bit, doesn't take long ↑
-
-    #↓ Transmitted as 2 bits, takes long ↓
-    elif receive == "B":
-        move("B")
-
-    elif receive == "R":
-        move("R")
-    #↑ Transmitted as 2 bits, takes long ↑
-
-    else:
-        move("S")
-
-    
+        
 
 
 
 
-# Transmitting Code
 
-
+# transmit values based on input
 def transmit():
-    forward = False
-    backward = False
-    leftTurn = False
-    rightTurn = False
-
-    # Read Buttons Pressed Value
-    if  bot(0).read_digital() == 1:
-        leftTurn = True
-    else:
-        leftTurn = False
-
-    if  bot(2).read_digital() == 1:
-        forward = True
-    else:
-        forward = False
-
-    if  bot(13).read_digital() == 1:
-        backward = True
-    else:
-        backward = False
-
-    if  bot(15).read_digital() == 1:
-        rightTurn = True
-    else:
-        rightTurn = False
-
-    # Act Based On Button Values
+    forward = 2
+    back = 13
+    left = 0
+    right = 15
     
-    if leftTurn == True:
-        display.show("L")
-        radio.send("L")
+    if bot(forward) == 1:
+        display.show('F')
+        for i in range(5):
 
-    elif forward == True:
-        display.show("F")
-        radio.send("F")
+            radio.send("F")
+        
+    if bot(back) == 1:
+        display.show('B')
+        for i in range(5):
+            radio.send("B")
+        
+    if bot(left) == 1:
+        display.show('C')
+        for i in range(5):
+            radio.send("L")
+        
+    if bot(right) == 1:
+        display.show('D')
+        for i in range(5):
+            radio.send("R")
 
-    elif backward == True:
-        display.show("B")
-        radio.send("B")
+    # to stop over flooding
+    sleep(50)
+            
 
-    elif rightTurn == True:
-        display.show("R")
-        radio.send("R")
 
-    else:
-        display.clear()
-# Main Run Loop, Pass in "B" for both, "T" for transmit, and "R" for reciever
-def run(s):
-    display.on()
-    speaker.on()
+
+# recive inputs and move
+def receive(left,right):
+    def start(direction):
+
+            if direction == "F":
+                display.show('F')
+                move(left,right,0)
+                
+            if direction == "B":
+                display.show('B')
+                move(-left,-right,0)
+                
+            if direction == "L":
+                display.show('L')
+                move(-left,right,0)
+    
+            if direction == "R":
+                display.show('R')
+                move(left,-right,0)
+    
+            else:
+                stop()
+                display.clear()
+            
+    
+    while True:
+        direction = str(radio.receive())
+        start(direction)
+        # delay to reduce noise
+
+
+
+
+
+
+# boost the signal for long distance
+def booster():
+    while True:
+        radio.send(str(radio.receive()))
+        sleep(50)
+    
+
+
+
+
+
+# base code to run trasmit, booster and recive code
+def run(trs,leftMoveSpd=75.0,rightMoveSpd=75.0):
+    import radio
     radio.on()
-    radio.config(power=5, data_rate=radio.RATE_2MBIT, channel=42)
-
-    bot(22).tone(500, 1000)
     
-    if s == "B":
-        while True:
-            receive()
-            transmit()
+    leftspeed = leftMoveSpd
+    rightspeed = rightMoveSpd
+    
+    radio.config(group=10)
+    # for any configs
 
-    elif s == "R":
-        while True:
-            receive()
 
-    elif s == "T":
-        while True:
-            transmit()
+    # transmit
+    if trs == "T":
+        transmit()
+
+    # recive
+    elif trs == "R":
+        
+        receive(leftspeed,rightspeed)
+
+    # boost
+    elif trs == "B":
+        booster()
+
+    # error
+    else:
+        display.show('ERROR')
+        
