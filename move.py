@@ -1,3 +1,4 @@
+#microbt-module: mov @2.0
 from cyberbot import *
 from microbit import *
 import music
@@ -42,18 +43,23 @@ def transmit():
     right = 15
     
     if bot(forward) == 1:
+        display.show('F')
         for i in range(5):
+
             radio.send("F")
         
     if bot(back) == 1:
+        display.show('B')
         for i in range(5):
             radio.send("B")
         
     if bot(left) == 1:
+        display.show('C')
         for i in range(5):
             radio.send("L")
         
     if bot(right) == 1:
+        display.show('D')
         for i in range(5):
             radio.send("R")
 
@@ -74,14 +80,19 @@ def receive(left,right):
 
             
             if direction == "F":
+                display.show('F')
                 move(left,right,0)
+                
             if direction == "B":
+                display.show('B')
                 move(-left,-right,0)
                 
             if direction == "L":
+                display.show('L')
                 move(left,-right,0)
     
             if direction == "R":
+                display.show('R')
                 move(left,right,0)
     
             else:
@@ -116,7 +127,7 @@ def run(trs,leftMoveSpd,rightMoveSpd):
     leftspeed = leftMoveSpd
     rightspeed = rightMoveSpd
     
-    #radio.config()
+    radio.config(group=10)
     # for any configs
 
 
