@@ -1,4 +1,7 @@
 # microbit-module:Radio Communications Made By Cohen & Akshay@0.5
+
+# to use this in microbit,download this file, click open in microbit, then click this file, then in your main type 'From radioComms import *' then 
+# in a new line type run(to transmit type 'T' to boost type 'B' to receive type 'R', left motor spd, right motor spd)
 from cyberbot import *
 from microbit import *
 import music
@@ -114,10 +117,10 @@ def booster():
 
 
 # base code to run trasmit, booster and recive code
-def run(trs,leftMoveSpd=75.0,rightMoveSpd=75.0):
+def run(trs,leftMoveSpd,rightMoveSpd):
     import radio
     radio.on()
-    
+    # our bot uses 75,75
     leftspeed = leftMoveSpd
     rightspeed = rightMoveSpd
     
