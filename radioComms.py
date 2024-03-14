@@ -8,6 +8,9 @@ import music
 import radio
 
 
+LW = 15
+RW = 0
+
 # turn on sound
 bot(22).tone(400, 10)
 bot(22).tone(800, 10)
@@ -18,16 +21,39 @@ def stop():
     bot(19).servo_speed(None)
 
 
+def WSTOP():
+        touched = False
+        if LW == 1:
+            bot(18).servo_speed(None)
+            touched = True
+        if RW == 1:
+            bot(19).servo_speed(None)
+            touched = True
+
+        return touched
+
+def WRETURN(lspd, rspd):
+        touched = False
+        if LW == 1 or RW == 1:
+            bot(18).servo_speed(-lspd)
+            bot(19).servo_speed(-rspd)
+            sleep(1000)
+            stop()
+        return touched
 
 
 
 # move motors accordingly, if no wait keep moving
 def move(lspd,rspd,wait):
+
+
     bot(18).servo_speed(lspd)
     bot(19).servo_speed(rspd)
+
     if wait != 0:
             sleep(wait)
             stop()
+
 
         
 
@@ -77,25 +103,30 @@ def transmit():
 def receive(left,right):
     def start(direction):
 
-            if direction == "F":
-                display.show('F')
-                move(left,right,0)
-                
             if direction == "B":
                 display.show('B')
                 move(-left,-right,0)
-                
-            if direction == "L":
+
+            elif direction == "L":
                 display.show('L')
                 move(-left,right,0)
     
-            if direction == "R":
+            elif direction == "R":
                 display.show('R')
                 move(left,-right,0)
+        
+            elif WRETURN(left, right) == True:
+                print()
+
+            elif direction == "F":
+                display.show('F')
+                move(left,right,0)
     
             else:
                 stop()
                 display.clear()
+
+ 
             
     
     while True:
