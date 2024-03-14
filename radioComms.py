@@ -38,11 +38,13 @@ def move(lspd,rspd,wait):
 # transmit values based on input
 def transmit():
     while True:
-        forward = 2
-        back = 13
+        forward = 5
+        back = 10
         left = 0
         right = 15
         buffer =1
+
+        
         if bot(forward).read_digital() == 1:
             for i in range(buffer):
                 radio.send("F")
