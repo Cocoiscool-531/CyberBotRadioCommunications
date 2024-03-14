@@ -42,25 +42,25 @@ def transmit():
         back = 13
         left = 0
         right = 15
-        
+        buffer =1
         if bot(forward).read_digital() == 1:
-            for i in range(5):
+            for i in range(buffer):
                 radio.send("F")
             display.show("F")
             sleep(300)
             
         elif bot(back).read_digital() == 1:
-            for i in range(4):
+            for i in range(buffer):
                 radio.send("B")
             display.show("B")
             
         elif bot(left).read_digital() == 1:
-            for i in range(4):
+            for i in range(buffer):
                 radio.send("L")
             display.show("L")
             
         elif bot(right).read_digital() == 1:
-            for i in range(4):
+            for i in range(buffer):
                 radio.send("R")
             display.show("R")
     
