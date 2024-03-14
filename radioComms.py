@@ -7,6 +7,8 @@ from microbit import *
 import music
 import radio
 
+maxSpeed = 100
+fL, fR = 0, 0
 
 LW = 15
 RW = 0
@@ -15,51 +17,79 @@ RW = 0
 bot(22).tone(400, 10)
 bot(22).tone(800, 10)
 
-# stop motors
-def stop():
-    bot(18).servo_speed(None)
-    bot(19).servo_speed(None)
+def movementSpeeds(lspd, rspd):
+    global fL, fR
+    
+    leftRatio = 1
+    leftReverse = False
+    rightRatio = 1
+    rightReverse = False
 
+    if lspd < 0:
+        leftReverse = True
 
-def WSTOP():
-        touched = False
-        if LW == 1:
-            bot(18).servo_speed(None)
-            touched = True
-        if RW == 1:
-            bot(19).servo_speed(None)
-            touched = True
+    if rspd < 0:
+        rightReverse = True
+    
+    if lspd > rspd: 
+        rightRatio = rspd / lspd
+    elif rspd > lspd: 
+        leftRatio = lspd / rspd
+    
+    if lspd > maxSpeed:
+        lspd = maxSpeed
+    if rspd > maxSpeed:
+        rspd = maxSpeed
+    
+    fL = lspd * leftRatio
+    fR = rspd * rightRatio
 
-        return touched
-
-def WRETURN(lspd, rspd):
-        touched = False
-        if LW == 1 or RW == 1:
-            bot(18).servo_speed(-lspd)
-            bot(19).servo_speed(-rspd)
-            sleep(1000)
-            stop()
-        return touched
-
-
+    if leftReverse == True:
+        fL = -fL
+    if rightReverse == True:
+        fR = -fR
 
 # move motors accordingly, if no wait keep moving
-def move(lspd,rspd,wait):
+def move(type, wait=0):
 
+    if type == "L":
+        bot(18,19).servo_speed(-fL,fR)
 
-    bot(18).servo_speed(lspd)
-    bot(19).servo_speed(rspd)
+    if type == "F":
+        bot(18,19).servo_speed(fL,fR)
+
+    if type == "B":
+        bot(18,19).servo_speed(-fL,-fR)
+
+    if type == "R":
+        bot(18,19).servo_speed(fL,-fR)
 
     if wait != 0:
             sleep(wait)
             stop()
 
+# stop motors
+def stop():
+    bot(18, 19).servo_speed()
 
-        
 
+def WSTOP():
+        touched = False
+        if LW == 1:
+            bot(18, 19).servo_speed()
+            touched = True
+        if RW == 1:
+            bot(18, 19).servo_speed()
+            touched = True
+        return touched
 
-
-
+def WRETURN(lspd, rspd):
+        touched = False
+        if LW == 1 or RW == 1:
+            move("R")
+            sleep(1000)
+            stop()
+            return touched
 
 # transmit values based on input
 def transmit():
@@ -104,23 +134,23 @@ def receive(left,right):
     def start(direction):
 
             if direction == "B":
-                display.show('B')
-                move(-left,-right,0)
+                display.show("B")
+                move("B")
 
             elif direction == "L":
-                display.show('L')
-                move(-left,right,0)
+                display.show("L")
+                move("L")
     
             elif direction == "R":
-                display.show('R')
-                move(left,-right,0)
+                display.show("R")
+                move("R")
         
             elif WRETURN(left, right) == True:
                 print()
 
             elif direction == "F":
-                display.show('F')
-                move(left,right,0)
+                display.show("F")
+                move("F")
     
             else:
                 stop()
@@ -155,12 +185,16 @@ def run(trs,leftMoveSpd,rightMoveSpd):
     import radio
     radio.on()
     # our bot uses 75,75
+    if leftMoveSpd == 0:
+        leftMoveSpd = 9999
+    if rightMoveSpd == 0:
+        leftMoveSpd = 9999
+        
     leftspeed = leftMoveSpd
     rightspeed = rightMoveSpd
     
     radio.config(group=10)
     # for any configs
-
 
     # transmit
     if trs == "T":
