@@ -1,4 +1,4 @@
-# microbit-module:Radio Communications Made By Cohen & Akshay@0.5
+# microbit-module:Radio Communications Made By Cohen & Akshay@1.0
 
 # to use this in microbit,download this file, click open in microbit, then click this file, then in your main type 'From radioComms import *' then 
 # in a new line type run(to transmit type 'T' to boost type 'B' to receive type 'R', left motor spd, right motor spd)
@@ -38,7 +38,7 @@ def move(lspd,rspd,wait):
 # transmit values based on input
 def transmit():
     while True:
-        forward = 5
+        forward = 6
         back = 10
         left = 0
         right = 15
@@ -49,7 +49,6 @@ def transmit():
             for i in range(buffer):
                 radio.send("F")
             display.show("F")
-            sleep(300)
             
         elif bot(back).read_digital() == 1:
             for i in range(buffer):
@@ -68,6 +67,8 @@ def transmit():
     
         else:
             display.clear()
+
+        sleep(50)
             
 
 
