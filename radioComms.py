@@ -83,7 +83,7 @@ def WSTOP():
             touched = True
         return touched
 
-def WRETURN(lspd, rspd):
+def WRETURN():
         touched = False
         if LW == 1 or RW == 1:
             move("R")
@@ -130,7 +130,7 @@ def transmit():
 
 
 # recive inputs and move
-def receive(left,right):
+def receive():
     def start(direction):
 
             if direction == "B":
@@ -145,7 +145,7 @@ def receive(left,right):
                 display.show("R")
                 move("R")
         
-            elif WRETURN(left, right) == True:
+            elif WRETURN() == True:
                 print()
 
             elif direction == "F":
@@ -189,9 +189,8 @@ def run(trs,leftMoveSpd,rightMoveSpd):
         leftMoveSpd = 9999
     if rightMoveSpd == 0:
         leftMoveSpd = 9999
-        
-    leftspeed = leftMoveSpd
-    rightspeed = rightMoveSpd
+
+    movementSpeeds(leftMoveSpd, rightMoveSpd)
     
     radio.config(group=10)
     # for any configs
@@ -203,7 +202,7 @@ def run(trs,leftMoveSpd,rightMoveSpd):
     # recive
     elif trs == "R":
         
-        receive(leftspeed,rightspeed)
+        receive()
 
     # boost
     elif trs == "B":
