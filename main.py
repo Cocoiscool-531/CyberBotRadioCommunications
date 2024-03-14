@@ -1,23 +1,12 @@
-# Imports go at the top
-from cyberbot import *
-from microbit import *
-import radio
-radio.on()
+from radioComms import *
 
-while True:
-    
-    if button_a.is_pressed():
-        audio.play(audio.SoundEffect())
-        radio.send('A')
-        
-    elif button_b.is_pressed():   
-        audio.play(audio.SoundEffect())
-        radio.send('B')
+# Pick ONE to uncomment below, functions listed above.
 
-    if radio.receive() == "A":
-        display.show("A")
+# Transmit Only
+#run("T", -75, 75)
 
-    if radio.receive() == "B":
-       display.show("B")
+# Receive Only
+#run("R", -75, 75)
 
-print("x")
+# Transmit & Receive
+#run("B", -75, 75)
