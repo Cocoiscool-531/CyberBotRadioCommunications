@@ -26,18 +26,21 @@ def RW():
 
 
 def WRETURN():
-
+    display.clear()
     L = 0
     R = 0
     
-    if LW == 0:
+    if LW() == 1:
         L = -1
-    if RW == 0:
+    if RW() == 1:
         R = -1
     if L !=0 or R !=0:
+        display.show("W")
         bot(18, 19).servo_speed(L*fL,R*fR)
-        sleep(2000)
+        sleep(500)
         stop()
+        display.clear()
+
 
 
 
@@ -103,7 +106,7 @@ def move(type, wait=0):
 
 # stop motors
 def stop():
-    bot(18, 19).servo_speed()
+    bot(18, 19).servo_speed(0,0)
 
 
 def WSTOP():
@@ -158,7 +161,7 @@ def transmit():
 # recive inputs and move
 def receive():
     def start(direction):
-
+            sleep(50)
             if direction == "B":
                 display.show("B")
                 move("B")
