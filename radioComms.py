@@ -4,7 +4,6 @@
 # in a new line type run(to transmit type 'T' to boost type 'B' to receive type 'R', left motor spd, right motor spd)
 from cyberbot import *
 from microbit import *
-import music
 import radio
 
 maxSpeed = 100
@@ -99,7 +98,7 @@ def transmit():
         back = 10
         left = 0
         right = 15
-        buffer =1
+        buffer = 1
 
         
         if bot(forward).read_digital() == 1:
