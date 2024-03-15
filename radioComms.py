@@ -22,6 +22,28 @@ def RW():
     else:
         return 1
 
+
+
+
+def WRETURN():
+
+    L = 0
+    R = 0
+    
+    if LW == 0:
+        L = -1
+    if RW == 0:
+        R = -1
+    if L !=0 or R !=0:
+        bot(18, 19).servo_speed(L*fL,R*fR)
+        sleep(2000)
+        stop()
+
+
+
+
+
+
 # turn on sound
 bot(22).tone(400, 10)
 bot(22).tone(800, 10)
@@ -63,6 +85,8 @@ def move(type, wait=0):
 
     if type == "L":
         bot(18,19).servo_speed(-fL,fR)
+        
+        
 
     if type == "F":
         bot(18,19).servo_speed(fL,fR)
@@ -92,14 +116,6 @@ def WSTOP():
             touched = True
         return touched
 
-def WRETURN():
-        touched = False
-        if LW() == 1 or RW() == 1:
-            touched = True
-            move("R")
-            sleep(1000)
-            stop()
-        return touched
 
 # transmit values based on input
 def transmit():
@@ -150,17 +166,19 @@ def receive():
             elif direction == "L":
                 display.show("L")
                 move("L")
+                WRETURN()
+                
     
             elif direction == "R":
                 display.show("R")
                 move("R")
-        
-            elif WRETURN() == True:
-                print()
+                WRETURN()
+    
 
             elif direction == "F":
                 display.show("F")
                 move("F")
+                WRETURN()
     
             else:
                 stop()
