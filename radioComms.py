@@ -9,8 +9,29 @@ import radio
 maxSpeed = 100
 fL, fR = 0, 0
 
+# left and right whikers
 LW = 15
 RW = 0
+
+
+
+def WBIND():
+    NR = []
+    if bot(LW).read_digital() == 1:
+            bot(18).servo_speed(None)
+            NR.append("L")
+            
+            
+    if RW == 1:
+            bot(19).servo_speed(None)
+            NR.append("R")
+            
+    if LW and RW == 1:
+            NR.append("F")
+    return NR
+    
+
+
 
 # turn on sound
 bot(22).tone(400, 10)
