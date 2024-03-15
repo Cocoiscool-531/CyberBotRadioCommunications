@@ -10,28 +10,17 @@ maxSpeed = 100
 fL, fR = 0, 0
 
 # left and right whikers
-LW = 15
-RW = 0
+def LW():
+    if bot(15).read_digital() == 1:
+        return 0
+    else:
+        return 1
 
-
-
-def WBIND():
-    NR = []
-    if bot(LW).read_digital() == 1:
-            bot(18).servo_speed(None)
-            NR.append("L")
-            
-            
-    if RW == 1:
-            bot(19).servo_speed(None)
-            NR.append("R")
-            
-    if LW and RW == 1:
-            NR.append("F")
-    return NR
-    
-
-
+def RW():
+    if bot(0).read_digital() == 1:
+        return 0
+    else:
+        return 1
 
 # turn on sound
 bot(22).tone(400, 10)
@@ -45,10 +34,10 @@ def movementSpeeds(lspd, rspd):
     rightRatio = 1
     rightReverse = False
 
-    if lspd < 0:
+    if lspd < 0 or lspd == -0:
         leftReverse = True
 
-    if rspd < 0:
+    if rspd < 0 or rspd == -0:
         rightReverse = True
     
     if lspd > rspd: 
@@ -95,17 +84,17 @@ def stop():
 
 def WSTOP():
         touched = False
-        if LW == 1:
+        if LW() == 1:
             bot(18, 19).servo_speed()
             touched = True
-        if RW == 1:
+        if RW() == 1:
             bot(18, 19).servo_speed()
             touched = True
         return touched
 
 def WRETURN():
         touched = False
-        if LW == 1 or RW == 1:
+        if LW() == 1 or RW() == 1:
             touched = True
             move("R")
             sleep(1000)
