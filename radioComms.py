@@ -110,7 +110,7 @@ def WRETURN():
             move("R")
             sleep(1000)
             stop()
-            return touched
+        return touched
 
 # transmit values based on input
 def transmit():
