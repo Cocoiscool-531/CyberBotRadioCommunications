@@ -86,6 +86,7 @@ def WSTOP():
 def WRETURN():
         touched = False
         if LW == 1 or RW == 1:
+            touched = True
             move("R")
             sleep(1000)
             stop()
