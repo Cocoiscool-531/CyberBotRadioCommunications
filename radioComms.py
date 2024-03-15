@@ -26,7 +26,6 @@ def RW():
 
 
 def WRETURN():
-    display.clear()
     L = 0
     R = 0
     
