@@ -9,47 +9,54 @@ import radio
 maxSpeed = 100
 fL, fR = 0, 0
 
-# left and right whikers
+# Functions to return status of left & right whiskkers. Inverts signal to make more clear.
 def LW():
     if bot(15).read_digital() == 1:
-        return 0
+        return False
     else:
-        return 1
+        return True
 
 def RW():
     if bot(0).read_digital() == 1:
-        return 0
+        return False
     else:
-        return 1
+        return True
 
 
 
-
+# Will run left motor back if LW is true. Will run right motor back if RW is true.
 def WRETURN():
-    display.clear()
     L = 0
     R = 0
     
-    if LW() == 1:
+    if LW() == True:
         L = -1
-    if RW() == 1:
+    if RW() == True:
         R = -1
-    if L !=0 or R !=0:
+    if L != 0 or R != 0:
         display.show("W")
         bot(18, 19).servo_speed(L*fL,R*fR)
         sleep(500)
         stop()
         display.clear()
 
-
-
-
-
-
+# Stops motors if either whisker is touched
+def WSTOP():
+        touched = False
+        if LW() == 1:
+            bot(18, 19).servo_speed(0,0)
+            touched = True
+        if RW() == 1:
+            bot(18, 19).servo_speed(0,0)
+            touched = True
+        return touched
 
 # turn on sound
-bot(22).tone(400, 10)
-bot(22).tone(800, 10)
+display.show(Image.SMILE)
+audio.play(audio.SoundEffect(400, 800, 200, vol_end=255))
+bot(22).tone(400, 100)
+bot(22).tone(800, 100)
+display.clear()
 
 def movementSpeeds(lspd, rspd):
     global fL, fR
@@ -107,18 +114,6 @@ def move(type, wait=0):
 # stop motors
 def stop():
     bot(18, 19).servo_speed(0,0)
-
-
-def WSTOP():
-        touched = False
-        if LW() == 1:
-            bot(18, 19).servo_speed()
-            touched = True
-        if RW() == 1:
-            bot(18, 19).servo_speed()
-            touched = True
-        return touched
-
 
 # transmit values based on input
 def transmit():
