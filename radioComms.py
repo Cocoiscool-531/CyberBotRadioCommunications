@@ -11,13 +11,13 @@ fL, fR = 0, 0
 
 # Functions to return status of left & right whiskkers. Inverts signal to make more clear.
 def LW():
-    if bot(15).read_digital() == 1:
+    if bot(15).read_digital() == 0:
         return False
     else:
         return True
 
 def RW():
-    if bot(0).read_digital() == 1:
+    if bot(0).read_digital() == 0:
         return False
     else:
         return True
@@ -161,30 +161,35 @@ def transmit():
 def receive():
     def start(direction):
             sleep(50)
-            if WRETURN == True:
-                print()
+
         
-            elif direction == "B":
+            if direction == "B":
                 display.show("B")
                 move("B")
+                WRETURN()
+        
 
             elif direction == "L":
                 display.show("L")
                 move("L")
+                WRETURN()
                 
     
             elif direction == "R":
                 display.show("R")
                 move("R")
+                WRETURN()
     
 
             elif direction == "F":
                 display.show("F")
                 move("F")
+                WRETURN()
     
             else:
                 stop()
                 display.clear()
+                WRETURN()
 
  
             
