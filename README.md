@@ -1,6 +1,44 @@
 # Building The Transmitter Circuit
 
-**Coming Soon**
+**Materials:**
+
+2.2k resistor (4x)
+
+Tacticle Switch (4x)
+
+Jumper Cables (8+)
+
+Assuming you already have Cyber:Bot and breadboard.
+
+**Schematic:**
+
+![Schematic Picture](https://github.com/Cocoiscool-531/CyberBotRadioCommunications/assets/119710842/4c10454a-b78e-42f8-880e-071b292fb477)
+
+**Instructions (pictures coming soon):**
+
+***Step 1:***
+
+Connect the 4 resistors to different rows in the breadboard, and 
+
+***Step 2:***
+
+In the center of the breadboard, place 4 buttons in a plus configuration
+
+***Step 3:***
+
+Place jumper wires from the resistors to the right side of the buttons, looking from the back of the bot
+
+***Step 4:***
+
+Place jumper wires connecting the left side of the buttons to each pin they are designated, as shown below:
+Left Button: Pin 0
+Top Button: Pin 6
+Bottom Button: Pin 10
+Right Button: Pin 15
+
+***Step 5:***
+
+Now run the code to test!
 
 # Uploading
 
