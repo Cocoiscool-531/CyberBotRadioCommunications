@@ -18,11 +18,27 @@ Assuming you already have Cyber:Bot and breadboard.
 
 ***Step 1:***
 
-Connect the 4 resistors to different rows in the breadboard
+Connect the 4 resistors to different rows in the breadboard, and 
 
 ***Step 2:***
 
-In the center of the breadboard, 
+In the center of the breadboard, place 4 buttons in a plus configuration
+
+***Step 3:***
+
+Place jumper wires from the resistors to the right side of the buttons, looking from the back of the bot
+
+***Step 4:***
+
+Place jumper wires connecting the left side of the buttons to each pin they are designated, as shown below:
+Left Button: Pin 0
+Top Button: Pin 6
+Bottom Button: Pin 10
+Right Button: Pin 15
+
+***Step 5:***
+
+Now run the code to test!
 
 # Uploading
 
