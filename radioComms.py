@@ -26,6 +26,7 @@ def RW():
 
 # Will run left motor back if LW is true. Will run right motor back if RW is true.
 def WRETURN():
+    stop()
     L = 0
     R = 0
     
@@ -39,6 +40,7 @@ def WRETURN():
         sleep(500)
         stop()
         display.clear()
+        return True
 
 # Stops motors if either whisker is touched
 def WSTOP():
@@ -159,26 +161,26 @@ def transmit():
 def receive():
     def start(direction):
             sleep(50)
-            if direction == "B":
+            if WRETURN == True:
+                print()
+        
+            elif direction == "B":
                 display.show("B")
                 move("B")
 
             elif direction == "L":
                 display.show("L")
                 move("L")
-                WRETURN()
                 
     
             elif direction == "R":
                 display.show("R")
                 move("R")
-                WRETURN()
     
 
             elif direction == "F":
                 display.show("F")
                 move("F")
-                WRETURN()
     
             else:
                 stop()
