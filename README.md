@@ -8,18 +8,18 @@ To add this module to your project, you can either get the example project, or m
 
 **Downloading example project:**
 
-Find the most recent version on the right side of the home page, download the HEX file and upload it into the [micro:bit Micro Python Editor](https://python.microbit.org/v/3/project)
+Find the most recent release on the right side of the home page, download the HEX file and upload it into the [micro:bit Micro Python Editor](https://python.microbit.org/v/3/project)
 
 **Installing into your own project:**
 
-Locate the most recent version on the right side of the homepage, download the radioComms.py file. Upload this file into the [micro:bit Micro Python Editor](https://python.microbit.org/v/3/project)
+Locate the most recent release on the right side of the homepage, download the radioComms.py file. Upload this file into the [micro:bit Micro Python Editor](https://python.microbit.org/v/3/project)
 For this to work, you must also download the [Cyber:Bot python library](https://www.parallax.com/package/cyberbot-library-python/) and upload it in the same way.
 
-# Older Versions, Contributing, & Beta Code
+# Older releases, Contributing, & Beta Code
 
-**Downloading older versions:**
+**Downloading older releases:**
 
-To download an older version, click the versions button on the right side of the screen and find the version you want, then use the instructions above to add to your project
+To download an older release, click the releases button on the right side of the screen and find the release you want, then use the instructions above to add to your project
 
 **Want to contribute or beta test?**
 
