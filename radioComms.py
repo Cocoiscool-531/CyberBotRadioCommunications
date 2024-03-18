@@ -12,15 +12,15 @@ fL, fR = 0, 0
 # Functions to return status of left & right whiskkers. Inverts signal to make more clear.
 def LW():
     if bot(15).read_digital() == 0:
-        return False
+        return 1
     else:
-        return True
+        return 0
 
 def RW():
     if bot(0).read_digital() == 0:
-        return False
+        return 1
     else:
-        return True
+        return 0
 
 
 
@@ -30,9 +30,9 @@ def WRETURN():
     L = 0
     R = 0
     
-    if LW() == True:
+    if LW() == 1:
         L = -1
-    if RW() == True:
+    if RW() == 1:
         R = -1
     if L != 0 or R != 0:
         display.show("W")
