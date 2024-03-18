@@ -51,13 +51,14 @@ def WSTOP():
             touched = True
         return touched
 
-# turn on sound
+# Play sound and display to confirm robot is on
 display.show(Image.SMILE)
 audio.play(audio.SoundEffect(400, 800, 200, vol_end=255))
 bot(22).tone(400, 100)
 bot(22).tone(800, 100)
 display.clear()
 
+# Adjust speeds to allow easy setting of max speed
 def movementSpeeds(lspd, rspd):
     global fL, fR
     
@@ -122,6 +123,7 @@ def transmit():
         back = 10
         left = 0
         right = 15
+        # Buffer is how many times the radio signal will be sent when a button is pressed
         buffer = 1
 
         
@@ -188,11 +190,6 @@ def receive():
     while True:
         direction = str(radio.receive())
         start(direction)
-        # delay to reduce noise
-
-
-
-
 
 
 # boost the signal for long distance
@@ -201,10 +198,6 @@ def booster():
         radio.send(str(radio.receive()))
         sleep(50)
     
-
-
-
-
 
 # base code to run trasmit, booster and recive code
 def run(trs,leftMoveSpd,rightMoveSpd):
