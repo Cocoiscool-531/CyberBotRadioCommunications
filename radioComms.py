@@ -26,7 +26,6 @@ def RW():
 
 # Will run left motor back if LW is true. Will run right motor back if RW is true.
 def WRETURN():
-    stop()
     L = 0
     R = 0
     
@@ -35,6 +34,7 @@ def WRETURN():
     if RW() == 1:
         R = -1
     if L != 0 or R != 0:
+        stop()
         display.show("W")
         bot(18, 19).servo_speed(L*fL,R*fR)
         sleep(500)
