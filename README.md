@@ -15,6 +15,8 @@ Find the most recent version on the right side of the home page, download the HE
 Locate the most recent version on the right side of the homepage, download the radioComms.py file. Upload this file into the [micro:bit Micro Python Editor](https://python.microbit.org/v/3/project)
 For this to work, you must also download the [Cyber:Bot python library](https://www.parallax.com/package/cyberbot-library-python/) and upload it in the same way.
 
+# Older Versions, Contributing, & Beta Code
+
 **Downloading older versions:**
 
 To download an older version, click the versions button on the right side of the screen and find the version you want, then use the instructions above to add to your project
