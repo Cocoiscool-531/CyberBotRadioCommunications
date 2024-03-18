@@ -6,7 +6,7 @@ from cyberbot import *
 from microbit import *
 import radio
 
-maxSpeed = 100
+maxSpeed = 99999
 fL, fR = 0, 0
 
 # Functions to return status of left & right whiskkers. Inverts signal to make more clear.
@@ -34,6 +34,12 @@ def WRETURN():
     if RW() == 1:
         R = -1
     if L != 0 or R != 0:
+        for i in range(5):
+            sleep(50)
+            if LW() == 1:
+                L = -1
+            if RW() == 1:
+                R = -1
         stop()
         display.show("W")
         bot(18, 19).servo_speed(L*fL,R*fR)
@@ -165,24 +171,28 @@ def receive():
         
             if direction == "B":
                 display.show("B")
+                WRETURN()
                 move("B")
                 WRETURN()
         
 
             elif direction == "L":
                 display.show("L")
+                WRETURN()
                 move("L")
                 WRETURN()
                 
     
             elif direction == "R":
                 display.show("R")
+                WRETURN()
                 move("R")
                 WRETURN()
     
 
             elif direction == "F":
                 display.show("F")
+                WRETURN()
                 move("F")
                 WRETURN()
     
