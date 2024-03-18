@@ -1,6 +1,28 @@
 # Building The Transmitter Circuit
 
-**Coming Soon**
+**Materials:**
+
+2.2k resistor (4x)
+
+Tacticle Switch (4x)
+
+Jumper Cables (8+)
+
+Assuming you already have Cyber:Bot and breadboard.
+
+**Schematic:**
+
+![Schematic Picture](https://github.com/Cocoiscool-531/CyberBotRadioCommunications/assets/119710842/4c10454a-b78e-42f8-880e-071b292fb477)
+
+**Instructions (pictures coming soon):**
+
+***Step 1:***
+
+Connect the 4 resistors to different rows in the breadboard
+
+***Step 2:***
+
+In the center of the breadboard, 
 
 # Uploading
 
