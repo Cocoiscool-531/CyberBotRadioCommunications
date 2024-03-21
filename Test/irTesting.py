@@ -43,8 +43,11 @@ def recieve():
 
         if A == 0:
             display.show("A")
-        elif B == 1:
+            sleep_ms(20)
+            
+        elif B == 0:
             display.show("B")
+            sleep_ms(20)
         else:
             display.clear()
 
