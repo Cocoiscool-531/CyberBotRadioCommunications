@@ -1,23 +1,40 @@
-# Imports go at the top
-from microbit import *
 from cyberbot import *
+from microbit import *
+from time import *
 
-freq = 37500
-lastPrinted = ""
+freqA = 15_000
+freqB = 20_000
+freq = 0
+sleep = 0
+us_s = 1000000
 
-while True:
-    iRr = bot(1, 2).ir_detect(37500)
-    iRl = bot(14, 13).ir_detect(37500)
+def transmit():
+    while True:
+        if button_a.is_pressed():
+            freq = freqA
+        elif button_b.is_pressed():
+            freq = freqB
+        else:
+            freq = 0
 
-    if iRl == 0 and iRr == 0:
-        bot(22).tone(200, 100)
-        display.show("B")
-    elif iRl == 0:
-        bot(22).tone(600, 100)
-        display.show("L")
-    elif iRr == 0:
-        bot(22).tone(1000, 100)
-        display.show("R")
-    else:
-        bot(22).tone(0, 0)
-        display.clear()
+        sleep = us_s / freq
+    
+        if freq != 0:
+            sleep_us(int(sleep))
+            bot(0).write_digital(1)
+            sleep_us(int(sleep))
+            bot(0).write_digital(0)
+        else:
+            bot(0).write_digital(0)
+
+def recieve():
+    while True:
+        A = bot(15, 0).ir_detect(freqA)
+        B = bot(15, 0).ir_detect(freqB)
+
+        if A == 1:
+            display.show("A")
+        elif B == 1:
+            display.show("B")
+        else:
+            display.clear()
