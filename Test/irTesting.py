@@ -2,9 +2,9 @@ from cyberbot import *
 from microbit import *
 from time import *
 
-freqA = 15_000
-freqB = 20_000
-freq = 1
+freqA = 60_000
+freqB = 50_000
+freq = 0
 sleep = 0
 us_s = 1000000
 
@@ -17,16 +17,19 @@ def transmit():
             freq = freqB
             display.show("B")
         else:
-            freq = 1
+            freq = 0
             display.clear()
-
-        sleep = us_s / freq
     
-        if freq != 1:
+        if freq != 0:
+            sleep = (us_s / freq) / 2
+            
             sleep_us(int(sleep))
+            
             bot(5).write_digital(1)
             bot(0).write_digital(1)
+            
             sleep_us(int(sleep))
+            
             bot(5).write_digital(0)
             bot(0).write_digital(0)
         else:
@@ -38,7 +41,7 @@ def recieve():
         A = bot(15, 0).ir_detect(freqA)
         B = bot(15, 0).ir_detect(freqB)
 
-        if A == 1:
+        if A == 0:
             display.show("A")
         elif B == 1:
             display.show("B")
