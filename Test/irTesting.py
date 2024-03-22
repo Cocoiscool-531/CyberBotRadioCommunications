@@ -1,7 +1,5 @@
-from cyberbot import *
-from microbit import *
-from time import *
-from tv_remote import *
+from dependencies import *
+
 header = 2400
 oneBit = 12000
 zeroBit = 600
