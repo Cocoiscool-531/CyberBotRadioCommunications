@@ -2,14 +2,6 @@ from cyberbot import *
 from microbit import *
 from time import *
 from tv_remote import *
-import machine
-
-freqA = 60_000
-freqB = 50_000
-freq = 0
-sleep = 0
-us_s = 1000000
-
 header = 2400
 oneBit = 12000
 zeroBit = 600
@@ -21,20 +13,24 @@ def off():
     bot(0).write_digital(0)
 
 
-def send(_1, _2, _3, _4, _5, _6, _7, _8=1, _9=0, _10=0, _11=0,_12=0):
+def send(command=[], device=[0,0,0,0,1]):
+    full=[]
+    command.reverse()
+    device.reverse()
     for i in range(1, 12):
-        if eval("_"+str(i)) == 1:
-            eval("_"+str(i)+" = oneBit")
+        if full[i] == 1:
+            full[i] = oneBit
         else:
-            eval("_"+str(i)+" = zeroBit")
+            full[i] = zeroBit
 
     on()
     sleep_us(header)
     off()
+    
     for i in range(1, 12):
         sleep_us(pause)
         on()
-        sleep_us(eval("_"+str(i)))
+        sleep_us(full[i])
         off()
 
 def transmit():
@@ -43,9 +39,9 @@ def transmit():
         B = button_b.is_pressed()
     
         if A:
-            send(0,0,0,0,0,0,0)
+            send(CommandCodes.key1)
         elif B:
-            send(1,0,0,0,0,0,0)
+            send(CommandCodes.key2)
         sleep_ms(45)
 
 def recieve():
@@ -63,3 +59,27 @@ def run(type):
         transmit()
     if type == "R":
         recieve()
+
+class CommandCodes():
+    key1        = [0,0,0,0,0,0,0]
+    key2        = [0,0,0,0,0,1,0]
+    key3        = [0,0,0,0,0,1,1]
+    key4        = [0,0,0,0,1,0,0]
+    key5        = [0,0,0,0,1,0,1]
+    key6        = [0,0,0,0,1,1,0]
+    key7        = [0,0,0,0,1,1,1]
+    key8        = [0,0,0,1,0,0,0]
+    key9        = [0,0,0,1,0,0,1]
+    key0        = [0,0,0,1,0,1,0]
+    channelPlus = [0,0,1,0,0,0,0]
+    channelMinu = [0,0,1,0,0,0,1]
+    volumePlus  = [0,0,1,0,0,1,0]
+    volumeMinu  = [0,0,1,0,0,1,1]
+    mute        = [0,0,1,0,1,0,0]
+    power       = [0,0,1,0,1,0,1]
+    enter       = [0,0,0,1,0,1,1]
+    input       = [0,1,0,0,1,0,1]
+    up          = [1,1,1,0,1,0,0]
+    down        = [1,1,1,0,1,0,1]
+    left        = [0,1,1,0,0,1,1]
+    right       = [0,1,1,0,1,0,0]
