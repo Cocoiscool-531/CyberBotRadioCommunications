@@ -8,6 +8,7 @@ import music
 import radio
 
 
+
 LW = 15
 RW = 0
 
@@ -21,25 +22,20 @@ def stop():
     bot(19).servo_speed(None)
 
 
-def WSTOP():
-        touched = False
-        if LW == 1:
-            bot(18).servo_speed(None)
-            touched = True
-        if RW == 1:
-            bot(19).servo_speed(None)
-            touched = True
+def IrReturn(lspd, rspd):
+    freq = 1850
+    LIR = bot(15,13).ir_detect(freq)
+    RIR = bot(0,2).ir_detect(freq)
 
-        return touched
+    L = 1
+    R = 1
 
-def WRETURN(lspd, rspd):
-        touched = False
-        if LW == 1 or RW == 1:
-            bot(18).servo_speed(-lspd)
-            bot(19).servo_speed(-rspd)
-            sleep(1000)
-            stop()
-        return touched
+    if LIR  == 0:
+        L = -1
+    if RIR == 0:
+        R = -1
+    move(lspd*L,rspd*R,0)
+    
 
 
 
@@ -64,29 +60,20 @@ def move(lspd,rspd,wait):
 # transmit values based on input
 def transmit():
     while True:
-        forward = 6
-        back = 10
-        left = 0
-        right = 15
         buffer =1
 
         
-        if bot(forward).read_digital() == 1:
-            for i in range(buffer):
-                radio.send("F")
-            display.show("F")
-            
-        elif bot(back).read_digital() == 1:
-            for i in range(buffer):
-                radio.send("B")
-            display.show("B")
-            
-        elif bot(left).read_digital() == 1:
+        if button_a.is_pressed():
             for i in range(buffer):
                 radio.send("L")
             display.show("L")
             
-        elif bot(right).read_digital() == 1:
+        elif button_b.is_pressed() and button_a.is_pressed():
+            for i in range(buffer):
+                radio.send("F")
+            display.show("F")
+            
+        elif button_b.is_pressed():
             for i in range(buffer):
                 radio.send("R")
             display.show("R")
@@ -103,25 +90,22 @@ def transmit():
 def receive(left,right):
     def start(direction):
 
-            if direction == "B":
+            if direction == "F":
+                display.show('F')
+                IrReturn(left,right)
+        
+            elif direction == "B":
                 display.show('B')
-                move(-left,-right,0)
+                IrReturn(-left,-right)
 
             elif direction == "L":
                 display.show('L')
-                move(-left,right,0)
+                IrReturn(-left,right)
     
             elif direction == "R":
                 display.show('R')
-                move(left,-right,0)
-        
-            elif WRETURN(left, right) == True:
-                print()
+                IrReturn(left,-right)
 
-            elif direction == "F":
-                display.show('F')
-                move(left,right,0)
-    
             else:
                 stop()
                 display.clear()
