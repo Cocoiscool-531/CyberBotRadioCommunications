@@ -1,0 +1,43 @@
+# terminal_chat_through_microbits
+# learn.parallax.com/cyberbot
+# Copyright Parallax Inc 2020 under MIT license
+
+from microbit import *
+import radio
+import random
+
+radio.on()
+radio.config(channel=23)
+def CC():
+    UID = random.randint(0,83)
+    radio.config(channel= UID)
+ 
+
+sleep(1000)
+
+print("micro:bit transceiver A")
+
+print("Type messages, press enter to send.")
+print("Received messages will also be displayed.")
+
+
+
+def transceiver():
+    name = input("Enter Name: ")
+    while True:
+        if uart.any():
+            tx = input("Send: ")
+            c = input.find("/c")
+            if c == True:
+                res = [int(i) for i in tx.split() if i.isdigit()]
+                merged = ""
+                for i in range(5, 8):
+                    merged += test_list[i]
+                test_list[5 : 8] = [merged]
+                
+            radio.send(name + ": " + tx)
+        message = radio.receive()
+        if message is not None:
+            print(message)
+
+transceiver()
