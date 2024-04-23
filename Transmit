@@ -1,0 +1,96 @@
+# microbit-module:Radio Communications Made By Cohen & Akshay@1.0
+
+# to use this in microbit,download this file, click open in microbit, then click this file, then in your main type 'From radioComms import *' then 
+# in a new line type run(to transmit type 'T' to boost type 'B' to receive type 'R', left motor spd, right motor spd)
+
+from microbit import *
+import music
+import radio
+
+
+
+
+# transmit values based on input
+def transmit():
+    while True:
+        forward = 6
+        back = 10
+        left = 0
+        right = 15
+        buffer =1
+
+        
+        a = button_a.is_pressed()
+        b = button_b.is_pressed()
+        
+            
+        if pin_logo.is_touched() == 1:
+            for i in range(buffer):
+                radio.send("B")
+            display.show("B")
+            
+        elif a == 1 and b == 0:
+            for i in range(buffer):
+                radio.send("L")
+            display.show("L")
+            
+        elif a == 0 and b == 1:
+            for i in range(buffer):
+                radio.send("R")
+            display.show("R")
+
+        elif a == 1 and b == 1:
+            for i in range(buffer):
+                radio.send("F")
+            display.show("F")
+    
+        else:
+            display.clear()
+
+        sleep(50)
+
+
+
+
+
+
+# boost the signal for long distance
+def booster():
+    while True:
+        radio.send(str(radio.receive()))
+        sleep(50)
+    
+
+
+
+
+
+# base code to run trasmit, booster and recive code
+def run(trs,leftMoveSpd,rightMoveSpd):
+    import radio
+    radio.on()
+    # our bot uses 75,75
+    leftspeed = leftMoveSpd
+    rightspeed = rightMoveSpd
+    
+    radio.config(group=10)
+    # for any configs
+
+
+    # transmit
+    if trs == "T":
+        transmit()
+
+    # recive
+    elif trs == "R":
+        
+        receive(leftspeed,rightspeed)
+
+    # boost
+    elif trs == "B":
+        booster()
+
+    # error
+    else:
+        display.show('ERROR')
+        
