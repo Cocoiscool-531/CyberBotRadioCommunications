@@ -1,0 +1,165 @@
+# microbit-module:Radio Communications Made By Cohen & Akshay@1.0
+
+# to use this in microbit,download this file, click open in microbit, then click this file, then in your main type 'From radioComms import *' then 
+# in a new line type run(to transmit type 'T' to boost type 'B' to receive type 'R', left motor spd, right motor spd)
+from cyberbot import *
+from microbit import *
+import music
+import radio
+
+
+
+LW = 15
+RW = 0
+
+# turn on sound
+bot(22).tone(400, 10)
+bot(22).tone(800, 10)
+
+# stop motors
+def stop():
+    bot(18).servo_speed(None)
+    bot(19).servo_speed(None)
+
+
+def IrReturn(lspd, rspd):
+    freq = 1500
+    LIR = bot(15,13).ir_detect(freq)
+    RIR = bot(0,2).ir_detect(freq)
+
+    L = 1
+    R = 1
+
+    if LIR  == 0:
+        L = -1
+    if RIR == 0:
+        R = -1
+    move(lspd*L,rspd*R,0)
+    
+
+
+
+# move motors accordingly, if no wait keep moving
+def move(lspd,rspd,wait):
+
+
+    bot(18).servo_speed(lspd)
+    bot(19).servo_speed(rspd)
+
+    if wait != 0:
+            sleep(wait)
+            stop()
+
+
+        
+
+
+
+
+
+# transmit values based on input
+def transmit():
+    while True:
+        buffer =1
+
+        
+        if button_a.is_pressed():
+            for i in range(buffer):
+                radio.send("L")
+            display.show("L")
+            
+        elif button_b.is_pressed() and button_a.is_pressed():
+            for i in range(buffer):
+                radio.send("F")
+            display.show("F")
+            
+        elif button_b.is_pressed():
+            for i in range(buffer):
+                radio.send("R")
+            display.show("R")
+    
+        else:
+            display.clear()
+
+        sleep(50)
+            
+
+
+
+# recive inputs and move
+def receive(left,right):
+    def start(direction):
+
+            if direction == "F":
+                display.show('F')
+                IrReturn(left,right)
+        
+            elif direction == "B":
+                display.show('B')
+                move(-left,-right,0)
+
+            elif direction == "L":
+                display.show('L')
+                IrReturn(-left,right)
+    
+            elif direction == "R":
+                display.show('R')
+                IrReturn(left,-right)
+
+            else:
+                stop()
+                display.clear()
+
+ 
+            
+    
+    while True:
+        direction = str(radio.receive())
+        start(direction)
+        # delay to reduce noise
+
+
+
+
+
+
+# boost the signal for long distance
+def booster():
+    while True:
+        radio.send(str(radio.receive()))
+        sleep(50)
+    
+
+
+
+
+
+# base code to run trasmit, booster and recive code
+def run(trs,leftMoveSpd,rightMoveSpd):
+    import radio
+    radio.on()
+    # our bot uses 75,75
+    leftspeed = leftMoveSpd
+    rightspeed = rightMoveSpd
+    
+    radio.config(group=10)
+    # for any configs
+
+
+    # transmit
+    if trs == "T":
+        transmit()
+
+    # recive
+    elif trs == "R":
+        
+        receive(leftspeed,rightspeed)
+
+    # boost
+    elif trs == "B":
+        booster()
+
+    # error
+    else:
+        display.show('ERROR')
+        
