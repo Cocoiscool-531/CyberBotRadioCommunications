@@ -6,6 +6,7 @@ from cyberbot import *
 from microbit import *
 import music
 import radio
+import random
 
 
 
@@ -57,37 +58,14 @@ def move(lspd,rspd,wait):
 
 
 
-# transmit values based on input
-def transmit():
-    while True:
-        buffer =1
-
-        
-        if button_a.is_pressed():
-            for i in range(buffer):
-                radio.send("L")
-            display.show("L")
-            
-        elif button_b.is_pressed() and button_a.is_pressed():
-            for i in range(buffer):
-                radio.send("F")
-            display.show("F")
-            
-        elif button_b.is_pressed():
-            for i in range(buffer):
-                radio.send("R")
-            display.show("R")
-    
-        else:
-            display.clear()
-
-        sleep(50)
-            
-
 
 
 # recive inputs and move
 def receive(left,right):
+    ch = random.randint(0,83)
+    radio.config(channel=ch)
+    for i in range(3):
+        display.scroll(ch)
     def start(direction):
 
             if direction == "F":
