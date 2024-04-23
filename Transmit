@@ -12,6 +12,8 @@ import radio
 
 # transmit values based on input
 def transmit():
+    ch = 75
+    radio.config(channel=ch)
     while True:
         forward = 6
         back = 10
@@ -20,14 +22,14 @@ def transmit():
         buffer =1
 
         
-        a = button_a.is_pressed()
-        b = button_b.is_pressed()
-        
-            
-        if pin_logo.is_touched() == 1:
+        a = button_b.is_pressed()
+        b = button_a.is_pressed()
+
+        if a == 1 and b == 1:
             for i in range(buffer):
-                radio.send("B")
-            display.show("B")
+                radio.send("F")
+            display.show("F")
+
             
         elif a == 1 and b == 0:
             for i in range(buffer):
@@ -43,6 +45,11 @@ def transmit():
             for i in range(buffer):
                 radio.send("F")
             display.show("F")
+            
+        elif pin_logo.is_touched() == 1:
+            for i in range(buffer):
+                radio.send("B")
+            display.show("B")
     
         else:
             display.clear()
